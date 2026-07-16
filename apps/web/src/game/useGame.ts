@@ -14,7 +14,9 @@ import { audio } from '../juice/audio';
 
 export type Mode =
   | { kind: 'ai'; difficulty: Difficulty }
-  | { kind: 'local' };
+  | { kind: 'local' }
+  /** Solo puzzle: seat 0 plays from a fixed position; no opponent moves. */
+  | { kind: 'puzzle' };
 
 export const HUMAN_SEAT: Player = 0;
 export const AI_SEAT: Player = 1;
@@ -81,8 +83,9 @@ function viewOf(state: MancalaState, moveCount: number, sowId: number): GameView
   };
 }
 
-export function useGame(mode: Mode) {
-  const committedRef = useRef<MancalaState>(mancala.initialState());
+export function useGame(mode: Mode, initial?: MancalaState) {
+  const initialRef = useRef<MancalaState>(initial ?? mancala.initialState());
+  const committedRef = useRef<MancalaState>(initialRef.current);
   const moveCountRef = useRef(0);
   const sowIdRef = useRef(0);
   const tokenRef = useRef(0);
@@ -95,7 +98,7 @@ export function useGame(mode: Mode) {
     tokenRef.current++;
     busyRef.current = false;
     aiPendingRef.current = false;
-    committedRef.current = mancala.initialState();
+    committedRef.current = initialRef.current;
     moveCountRef.current = 0;
     captureTotalsRef.current = [0, 0];
     setView(viewOf(committedRef.current, 0, ++sowIdRef.current));

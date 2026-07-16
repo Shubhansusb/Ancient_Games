@@ -4,6 +4,7 @@ import { audio } from './juice/audio';
 import Landing from './pages/Landing';
 import GamePage from './pages/GamePage';
 import StatsPage from './pages/StatsPage';
+import PuzzlePage from './pages/PuzzlePage';
 
 export default function App() {
   // Browsers gate audio behind a user gesture — unlock on the first one.
@@ -22,6 +23,7 @@ export default function App() {
       <Route path="/" element={<Landing />} />
       <Route path="/play/:modeId" element={<GamePage />} />
       <Route path="/stats" element={<StatsPage />} />
+      <Route path="/daily" element={<PuzzlePage />} />
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );

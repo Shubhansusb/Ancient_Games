@@ -3,6 +3,7 @@ import type { Difficulty } from '@ancient-games/ai';
 import { SproutDoodle } from '../components/Doodles';
 import { RulesButton } from '../components/Rules';
 import { SoundMenu } from '../juice/SoundMenu';
+import { readDaily, todayNumber } from '../game/puzzle';
 import { DIFFICULTY_LABELS } from './GamePage';
 
 function lastDifficulty(): Difficulty {
@@ -107,6 +108,9 @@ function Ticker() {
 export default function Landing() {
   const navigate = useNavigate();
   const last = lastDifficulty();
+  const day = todayNumber();
+  const daily = readDaily();
+  const dailyDone = daily?.day === day;
   return (
     <main className="menu-screen">
       <section className="hero">
@@ -148,6 +152,30 @@ export default function Landing() {
       <Ticker />
 
       <section className="menu-body">
+        <div className="card daily-card" aria-labelledby="daily-harvest">
+          <h2 id="daily-harvest" className="card-heading">
+            🌾 Daily Harvest #{day}
+          </h2>
+          <p className="card-sub">
+            One puzzle a day, same for everyone: bank as many seeds as you can in a single turn.
+          </p>
+          {dailyDone ? (
+            <div className="daily-done">
+              <span className="daily-result">
+                {daily.score}/{daily.optimal} {'⭐'.repeat(daily.stars)}
+                {daily.streak > 1 && ` · 🔥 ${daily.streak}`}
+              </span>
+              <button type="button" className="btn" onClick={() => navigate('/daily')}>
+                Practice
+              </button>
+            </div>
+          ) : (
+            <button type="button" className="btn btn-green" onClick={() => navigate('/daily')}>
+              Play today's harvest
+            </button>
+          )}
+        </div>
+
         <div className="card" aria-labelledby="vs-computer">
           <h2 id="vs-computer" className="card-heading">
             Challenge The Farmer 🧑‍🌾

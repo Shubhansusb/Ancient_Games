@@ -1064,6 +1064,24 @@ h1.wordmark {
   flex-shrink: 0;
 }
 
+/* ===== Daily Harvest ===== */
+
+.daily-card {
+  border-color: var(--sprout);
+  box-shadow: 0 6px 0 var(--leaf);
+}
+
+.daily-done {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.daily-result {
+  font: 700 1.05rem var(--display);
+  font-variant-numeric: tabular-nums;
+}
+
 /* ===== Stats page ===== */
 
 .stats-screen {
