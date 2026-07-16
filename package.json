@@ -9,7 +9,7 @@
   ],
   "scripts": {
     "dev": "npm run dev -w @ancient-games/web",
-    "build": "npm run build -w @ancient-games/web",
+    "build": "npm run build -w @ancient-games/web && rm -rf dist && cp -R apps/web/dist dist",
     "test": "vitest run",
     "typecheck": "tsc -b"
   },
